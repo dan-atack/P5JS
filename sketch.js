@@ -37,9 +37,11 @@ function draw() {
   fill(FOOD_GREEN);
   text(`Food: ${economy.food}`, 0, 128, 256, 128);
   economy.advanceFoodDepletionTicker();
-  // Building ghost follows cursor if building is selected:
+  // Building ghost follows cursor and 'snaps to' map grid if building is selected:
   if (menu.buildingSelected) {
-    
-    rect(mouseX, mouseY, BLOCK_WIDTH * 2, BLOCK_WIDTH * 2);
+    // Round mouse position to nearest grid location:
+    const gridX = Math.floor(mouseX / BLOCK_WIDTH) * BLOCK_WIDTH;
+    const gridY = Math.floor(mouseY / BLOCK_WIDTH) * BLOCK_WIDTH;
+    rect(gridX, gridY, BLOCK_WIDTH * 2, BLOCK_WIDTH * 2);
   }
 }

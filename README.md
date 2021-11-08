@@ -10,17 +10,17 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 1. Installed P5JS extension and related libraries and re-familiarized myself with the Live server.
 
-2. Watched some tutorials and checked out a demo project (eerily similar to Blockland, I was vaguely pleased to see).
+2. Watched some tutorials and checked out a demo project (surprisingly similar to Blockland, I was vaguely pleased to see).
 
 3. Created very simple demo of a bar that shrinks but when you click the mouse it gets bigger again. This is the entire game in a nutshell.
 
 ### Phase 1 - Initial Classes and Key Inputs - November 5, 2021
 
-1. Create block object class with render method that creates a square (with one of three colors depending on the block's type).
+1. Create Block object class with render method that creates a square (with one of three colors depending on the block's type).
 
-2. Create map object class with render method that will be called in the sketch's draw function.
+2. Create Map object class with render method that will be called in the sketch's draw function. The Map has a method to render many blocks, to form the game's initial terrain.
 
-3. Create player object class, which is a little rover that can be moved from side to side with the A and S keys.
+3. Create Player object class, which is a little rover that can be moved from side to side with the A and S keys.
 
 4. Create Constants file for top-level game parameters.
 
@@ -38,7 +38,7 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 6. Add dummy buttons as placeholders to sidebar UI.
 
-### Phase 3 - Mouse Pointer Following and Buildings - November 7, 2021
+### Phase 3 - Mouse Pointer Following and Building Placement Preliminaries - November 7, 2021
 
 1. Create Infrastructure class, which will be like the map of the infrastructure the player builds.
 
@@ -47,3 +47,11 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 3. Add method to Menu class to check if any building's button has been clicked.
 
 4. When that button is clicked, have a 'ghost' image of the structure follow the mouse pointer.
+
+5. Have the building's ghost image 'snap to' the map grid, by writing a function that rounds the mouseX/mouseY values to the nearest interval of block width.
+
+### Phase 4 - Building Placement and Purchasing - November 8, 2021
+
+1. Create a data file with details for each building option; each building's details can be given as a json-like object.
+
+2. Change the Menu class's buildingSelected property to be an object instead of a string. Update the check in sketch.js to check for buildingSelected.name instead of just buildingSelected. When no building is selected the buildingSelected property should still be an object (not null) but all of its fields should be empty so that checking the name will be falsey without returning an error.
