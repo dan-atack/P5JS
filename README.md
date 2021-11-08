@@ -24,4 +24,26 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 4. Create Constants file for top-level game parameters.
 
-### Phase 2 - Mouse Click Handlers and Better Maps - November 6, 2021
+### Phase 2 - Mouse Click Handlers and Sidebar - November 6, 2021
+
+1. Make a mouse-click handler function as a global event listener.
+
+2. Create an Economy object class, which will keep track of different resources that the player has. This will control the resource quantity displays in the game's UI.
+
+3. Give the Economy class a method for detecting if a block has been clicked, and have it increment the resource type of the block.
+
+4. Create a sidebar for the game.
+
+5. Add a food quantity to the economy and have it decrement automatically.
+
+6. Add dummy buttons as placeholders to sidebar UI.
+
+### Phase 3 - Mouse Pointer Following and Buildings - November 7, 2021
+
+1. Create Infrastructure class, which will be like the map of the infrastructure the player builds.
+
+2. Create Building class, which will be used for the individual buildings the player builds.
+
+3. Add method to Menu class to check if any building's button has been clicked.
+
+4. When that button is clicked, have a 'ghost' image of the structure follow the mouse pointer.

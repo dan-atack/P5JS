@@ -1,23 +1,27 @@
 class Block {
     constructor(x, y, type) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
+        this.x = x; // x = pixel location of left edge
+        this.y = y; // y = pixel location of top edge
+        this.type = type;   // Numerical code corresponding to value in map array
+        this.resourceName = ''  // Corresponds with resource names in the 'economy' class
     }
 
     render() {
         switch (this.type) {
             // Red Rocks!
             case 1:
-                fill('#B13A1A');
+                fill(RED_ROCK);
+                this.resourceName = 'rock' ;
                 break;
             // Martian Sand
             case 2:
-                fill('#FFA500');
+                fill(YELLOW_SAND);
+                this.resourceName = 'sand';
                 break;
             // Water Ice
             case 3:
-                fill('#AED8E5');
+                fill(BLUE_ICE);
+                this.resourceName = 'ice';
                 break;
         }
         rect(this.x, this.y, BLOCK_WIDTH, BLOCK_WIDTH,);

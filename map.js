@@ -21,4 +21,10 @@ class Map {
         }
     }
 
+    renderMap() {
+        this.blocks.forEach((block) => {
+            block.render();
+        })
+    }
+
 }
