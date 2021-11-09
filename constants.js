@@ -6,11 +6,20 @@ const SIDEBAR_WIDTH = 256 // Sidebar width in pixels
 const BLOCK_WIDTH = 16 // Block width in pixels
 const PLAYER_WIDTH = 32 // Player wheel / chassis dimensions
 
-// Colours
+// Colours, in ROYGBIV order (and then grays from lighter to darker)
 
-const BLUE_ICE = '#AED8E5';
 const RED_ROCK = '#B13A1A';
 const YELLOW_SAND = '#FFA500';
-const MINERAL_GRAY = '#82777C';
+const CO2_COLLECTOR_YELLOW = '#B28000';
 const FOOD_GREEN = '#7CA059';
+const GREENHOUSE_GREEN = '#475B33';
+const BLUE_ICE = '#AED8E5';
+const SOLAR_PANEL_BLUE = '#012846';
+const GLASS_FACTORY_BLUE = '#0478D2';
+
 const SIDEBAR_GRAY = '#AAAEBA';
+const MINERAL_GRAY = '#82777C';
+
+
+
+

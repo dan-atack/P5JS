@@ -52,6 +52,20 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 ### Phase 4 - Building Placement and Purchasing - November 8, 2021
 
-1. Create a data file with details for each building option; each building's details can be given as a json-like object.
+1. Create a data file with details for each building option; each building's details can be given as a json-like object. Details include width and height (in block units), resource costs, resource outputs, name and description text (to be displayed on the button/below the buttons in the remaining space in the sidebar).
 
-2. Change the Menu class's buildingSelected property to be an object instead of a string. Update the check in sketch.js to check for buildingSelected.name instead of just buildingSelected. When no building is selected the buildingSelected property should still be an object (not null) but all of its fields should be empty so that checking the name will be falsey without returning an error.
+2. Change the Menu class's building Selected property to be an object instead of a string. Update the check in sketch.js to check for buildingSelected.name instead of just buildingSelected. When no building is selected the buildingSelected property should still be an object (not null) but all of its fields should be empty so that checking the name will be falsey without returning an error.
+
+3. Add a new Infrastructure method, placeBuilding, to be called when the user clicks on the map after selecting a building. This will create a new instance of the Building class, add it to the Infrastructure's buildings list.
+
+4. Add method for the Infrastructure class to calculate resource generation from its buildings list...
+
+5. Add another method for Infra class to calculate resource CONSUMPTION from all buildings.
+
+6. Add higher-level Infra method, calculateProduction, to call both the above functions, and store the balances in fields whose names correspond to the Economy class's resource names.
+
+7. Add Infrastructure render method to actually show the buildings being created. Infra render method simply calls each of its buildings' render methods, of course.
+
+8. When Infrastructure placeStructure method performs a build, have it set the addedBuilding flag to true, to signal the Engine to de-select the current building... only if the player can no longer afford the structure!
+
+9. Prevent structures from piling up by adding a method to the Infra class to 'detect structures' - run as part of the build consideration process to check if there are other buildings potentially in the way of the cursor.

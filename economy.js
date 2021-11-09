@@ -5,6 +5,8 @@ class Economy {
         this.rock = 0;
         this.food = 180;    // goal of the game is to make more of this
         this.money = 0;     // you can't eat money!
+        this.cO2 = 0;       // consumed by greenhouse to produce food
+        this.power = 0;     // Initially at least, power will just be another thing you can produce, stockpile and spend.
         this.foodDepletionTick = 0; // Food is reduced by one unit whenever the depletion ticker hits zero
         this.foodDepletionInterval = 60;    // How many ticks does one unit of food last?
     }

@@ -2,6 +2,7 @@ const map1 = new Map();
 const player = new Player();
 const economy = new Economy();
 const menu = new Menu();
+const infra = new Infrastructure();
 
 function setup() {
   const canvasWidth = WORLD_WIDTH * BLOCK_WIDTH + SIDEBAR_WIDTH;
@@ -13,8 +14,13 @@ function setup() {
   menu.render();
 }
 
+// Whenever the mouse is clicked, check:
 function mousePressed() {
+  // Was a resource tile clicked? (economy)
   economy.checkForResources(map1, mouseX, mouseY);
+  // Was a building placed? (infra)
+  infra.checkForClick(mouseX, mouseY, menu.buildingSelected, economy); // Infra needs to know which building and what money you gots
+  // Was a menu button clicked? (menu)
   menu.checkForClick(mouseX, mouseY);
 }
 
@@ -24,6 +30,7 @@ function draw() {
   player.render();
   player.handleUpdates();
   menu.render();
+  infra.renderBuildings();
   fill('#FCD63B');
   textSize(24);
   fill(BLUE_ICE);
@@ -32,16 +39,20 @@ function draw() {
   text(`Sand: ${economy.sand}`, 0, 32, 256, 128);
   fill(MINERAL_GRAY);
   text(`Rock: ${economy.rock}`, 0, 64, 256, 128);
+  fill(SIDEBAR_GRAY);
+  text(`CO2: ${economy.cO2}`, 0, 96, 256, 128);
   fill(YELLOW_SAND);
-  text(`Money: ${economy.money}`, 0, 96, 256, 128);
+  text(`Money: ${economy.money}`, 0, 128, 256, 128);
   fill(FOOD_GREEN);
-  text(`Food: ${economy.food}`, 0, 128, 256, 128);
+  text(`Food: ${economy.food}`, 0, 160, 256, 128);
   economy.advanceFoodDepletionTicker();
   // Building ghost follows cursor and 'snaps to' map grid if building is selected:
-  if (menu.buildingSelected) {
+  if (menu.buildingSelected.name) {
     // Round mouse position to nearest grid location:
     const gridX = Math.floor(mouseX / BLOCK_WIDTH) * BLOCK_WIDTH;
     const gridY = Math.floor(mouseY / BLOCK_WIDTH) * BLOCK_WIDTH;
-    rect(gridX, gridY, BLOCK_WIDTH * 2, BLOCK_WIDTH * 2);
+    const buildingWidth = menu.buildingSelected.width * BLOCK_WIDTH;
+    const buildingHeight = menu.buildingSelected.height * BLOCK_WIDTH;
+    rect(gridX, gridY, buildingWidth, buildingHeight);
   }
 }

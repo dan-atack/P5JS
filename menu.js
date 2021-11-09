@@ -12,7 +12,24 @@ class Menu {
         this.buttonPadding = 12;
         this.buttonWidth = this.width / 2;
         this.buttonHeight = this.height / 4;
-        this.buildingSelected = null;
+        this.nullBuildingShape = {   // Essentially a 'null' building template
+            id: 0,
+            name: '',
+            width: 0,
+            height: 0,
+            color: 255,
+            cost: {
+                ice: 0
+            },
+            outputs: {
+                cO2: 0
+            },
+            consumes: {
+                ice: 0
+            },
+            buildTime: 0
+        };
+        this.buildingSelected = this.nullBuildingShape; // This value stores the currently selected building; null shape is the default.
     }
 
     render() {
@@ -36,9 +53,12 @@ class Menu {
         text(this.button4.name, this.button4.x + this.buttonPadding, this.button4.y + this.buttonPadding, 256, 128);
     }
 
+    // Engine calls this function whenever there is a click; it detects if a menu button was clicked
     checkForClick(mouseX, mouseY) {
+        // Check each button's physical area for a click
         const buttons = [this.button1, this.button2, this.button3, this.button4];
         buttons.forEach((button) => {
+            // If a button has been clicked, call the click handler to see which building was selected:
             this.isButtonClicked(button, mouseX, mouseY);
         })
     }
@@ -48,10 +68,10 @@ class Menu {
         const yMatch = (mouseY >= button.y && mouseY < button.y + this.buttonWidth);
         if (xMatch && yMatch) {
             // Clicking the button once selects the building; clicking again toggles it off:
-            if (!(this.buildingSelected === button.name))  {
-                this.buildingSelected = button.name;
+            if (!(this.buildingSelected.name === button.name))  {
+                this.buildingSelected = buildings.find((building) => building.name === button.name);
             } else {
-                this.buildingSelected = null;
+                this.buildingSelected = this.nullBuildingShape;
             }
         }
     }
