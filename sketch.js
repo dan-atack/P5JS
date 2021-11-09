@@ -24,6 +24,7 @@ function mousePressed() {
   menu.checkForClick(mouseX, mouseY);
   // Deselect building production if insufficient resources remain:
   menu.checkIfJustPurchased(infra, economy);
+  // console.log(mouseY);
 }
 
 function draw() {

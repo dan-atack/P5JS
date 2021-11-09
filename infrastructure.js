@@ -7,6 +7,7 @@ class Infrastructure {
         this.missingResources = []  // When a building fails the cost check, list the resources needed
     }
 
+    // Mouse click handler to determine if a click event should be interpreted as a building placement request:
     checkForClick(mouseX, mouseY, buildingData, economy) {
         // Only act on mouse click events if a building type has been selected:
         if (buildingData.name) {
@@ -18,14 +19,20 @@ class Infrastructure {
     placeBuilding(x, y, buildingData, economy) {
         // Ensure building is within the map:
         if (x < WORLD_WIDTH * BLOCK_WIDTH && y < WORLD_HEIGHT * BLOCK_WIDTH) {
+            // Round mouse position to nearest grid location:
+            const gridX = Math.floor(mouseX / BLOCK_WIDTH) * BLOCK_WIDTH;
+            const gridY = Math.floor(mouseY / BLOCK_WIDTH) * BLOCK_WIDTH;
+            // Ensure there are sufficient resources to pay for building
             if (this.determineBuildingIsAffordable(economy, buildingData)) {
-                // Round mouse position to nearest grid location:
-                const gridX = Math.floor(mouseX / BLOCK_WIDTH) * BLOCK_WIDTH;
-                const gridY = Math.floor(mouseY / BLOCK_WIDTH) * BLOCK_WIDTH;
-                const building = new Building(gridX, gridY, buildingData);
-                this.buildings.push(building);
-                this.payForBuilding(economy, buildingData.costs);
-                this.justBuilt = buildingData;
+                // Ensure building site is not obstructed
+                if (!this.checkForBuildingObstructions(gridX, gridY, buildingData)) {
+                    const building = new Building(gridX, gridY, buildingData);
+                    this.buildings.push(building);
+                    this.payForBuilding(economy, buildingData.costs);
+                    this.justBuilt = buildingData;
+                } else {
+                    console.log('Obstruction detected: building in the way');
+                }
             } else {
                 console.log(this.missingResources); // TODO: Add in-game visual display of this message
             }
@@ -34,6 +41,7 @@ class Infrastructure {
         }
     }
 
+    // Takes the economy object plus the prospective new building's data to establish if you have enough of all required resources:
     determineBuildingIsAffordable(economy, buildingData) {
         const affordable = true;
         const shortages = []; // Keep track of any shortages - if you have insufficient of a resource it will be noted.
@@ -51,12 +59,44 @@ class Infrastructure {
         }
     }
 
+    // Looks through the list of existing buildings to ensure no overlap will occur upon placement of new structure:
+    checkForBuildingObstructions(x, y, buildingData) {
+        let obstruction = false;
+        this.buildings.forEach((building) => {
+            // Find x and y start and end points for existing structure (for now assume all buildings are rectangles)
+            const xRange = [building.x, building.x + building.width];
+            // Since Y values are 'upside down', the 'roof' of the structure is its y value, and its 'floor' is y - height. Intuitive!
+            const yRange = [building.y + building.height, building.y];
+            const right = x + buildingData.width * BLOCK_WIDTH;
+            const bottom = y + buildingData.height * BLOCK_WIDTH;
+            const leftInRange = x >= xRange[0] && x < xRange[1];
+            const topInRange = y < yRange[0] && y >= yRange[1];
+            const rightInRange = right > xRange[0] && right < xRange[1];
+            const bottomInRange = bottom > yRange[1] && bottom < yRange[0];
+            console.log(y);
+            console.log(yRange);
+            console.log(leftInRange);
+            console.log(topInRange);
+            console.log(rightInRange);
+            console.log(bottomInRange);
+            // Obstruction is true if: x is in range AND (y OR y + height) is also in range
+            // Set obstruction to true if any part of new building's proposed location overlaps existing structure
+            if (leftInRange && (topInRange || bottomInRange)) obstruction = true;
+            // console.log(obstruction);
+            if (topInRange && (leftInRange || rightInRange)) obstruction = true;
+            // console.log(obstruction);
+            if (rightInRange && (topInRange || bottomInRange)) obstruction = true;
+            // console.log(obstruction);
+            if (bottomInRange && (leftInRange || rightInRange)) obstruction = true;
+            console.log(obstruction);
+        })
+        return obstruction;
+    }
+
     // For the payment, economy is the economy object and costs is a the building's costs dictionary object:
     payForBuilding(economy, costs) {
-        console.log(costs);
         const resources = Object.keys(costs);
         resources.forEach((resource) => {
-            console.log(costs[resource]);
             economy.addResource(resource, -costs[resource]);
         })
     }

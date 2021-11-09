@@ -24,7 +24,7 @@ const buildings = [
         id: 2,
         name: 'Glass Factory',
         width: 3,   // Width in block units
-        height: 2,  // Height in block units
+        height: 3,  // Height in block units
         color: GLASS_FACTORY_BLUE,
         costs: {     // Resource codenames match economy fields
             rock: 2,
