@@ -68,6 +68,19 @@ class Infrastructure {
         this.missingResources = [];
     }
 
+    calculateIncome(building) {
+        // Get the dictionary or a building's resource outputs
+    }
+
+    calculateMaintenance(building) {
+        // Get the dictionary for a building's resource consumption needs
+    }
+
+    handleProduction(economy) {
+        // Go through buildings list; for each building check its resource output fields AND resource consumption fields
+        // When the consumption needs are available, reduce their quantity/ies and add the output/s to the economy
+    }
+
     renderBuildings() {
         this.buildings.forEach((building) => building.render());
     }

@@ -58,16 +58,18 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 3. Add a new Infrastructure method, placeBuilding, to be called when the user clicks on the map after selecting a building. This will create a new instance of the Building class, add it to the Infrastructure's buildings list.
 
-4. Add method for the Infrastructure class to calculate resource generation from its buildings list...
+### 4. Add method for the Infrastructure class to calculate resource generation from its buildings list...
 
-5. Add another method for Infra class to calculate resource CONSUMPTION from all buildings.
+### 5. Add another method for Infra class to calculate resource CONSUMPTION from all buildings.
 
-6. Add higher-level Infra method, calculateProduction, to call both the above functions, and store the balances in fields whose names correspond to the Economy class's resource names.
+### 6. Add higher-level Infra method, handleProduction, to call both the above functions, and store the balances in fields whose names correspond to the Economy class's resource names.
 
 7. Add Infrastructure render method to actually show the buildings being created. Infra render method simply calls each of its buildings' render methods, of course.
 
 8. When Infrastructure placeStructure method performs a build, have it set the addedBuilding flag to true, to signal the Engine to de-select the current building... only if the player can no longer afford the structure!
 
-9. Prevent structures from piling up by adding a method to the Infra class to 'detect structures' - run as part of the build consideration process to check if there are other buildings potentially in the way of the cursor.
+### 9. Prevent structures from piling up by adding a method to the Infra class to 'detect structures' - run as part of the build consideration process to check if there are other buildings potentially in the way of the cursor.
 
 10. When a building is purchased, subtract the cost from the resource tallies.
+
+### 11. Add text displays for resource production (printing info from the Infra function described on step 6) rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss.
