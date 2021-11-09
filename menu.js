@@ -63,6 +63,7 @@ class Menu {
         })
     }
 
+    // Select building for production:
     isButtonClicked(button, mouseX, mouseY) {
         const xMatch = (mouseX >= button.x && mouseX < button.x + this.buttonWidth);
         const yMatch = (mouseY >= button.y && mouseY < button.y + this.buttonWidth);
@@ -71,9 +72,29 @@ class Menu {
             if (!(this.buildingSelected.name === button.name))  {
                 this.buildingSelected = buildings.find((building) => building.name === button.name);
             } else {
-                this.buildingSelected = this.nullBuildingShape;
+                this.deselectBuilding();
             }
         }
+    }
+
+    // Deselect building if there are not enough resources remaining to build the same structure again
+    checkIfJustPurchased(infra, economy) {
+        if (infra.justBuilt) {
+            infra.determineBuildingIsAffordable(economy, infra.justBuilt);
+            if (infra.missingResources.length > 0) {
+                console.log('ping')
+                infra.resetFlags();
+                this.buildingSelected = this.nullBuildingShape;
+            }
+        } else if (infra.missingResources.length > 0) {
+            infra.resetFlags();
+            this.buildingSelected = this.nullBuildingShape;
+        }
+    }
+
+    // Reset building selection to null:
+    deselectBuilding() {
+        this.buildingSelected = this.nullBuildingShape;
     }
 
 }

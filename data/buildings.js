@@ -8,9 +8,9 @@ const buildings = [
         height: 3,  // Height in block units
         color: CO2_COLLECTOR_YELLOW,
         costs: {     // Resource codenames match economy fields
-            ice: 10,
-            rock: 10,
-            money: 20
+            ice: 2,
+            rock: 2,
+            money: 2
         },
         outputs: {  // Resource codenames match economy fields; outputs are added on a 'tick' basis similar to how food is reduced.
             cO2: 1
@@ -27,8 +27,8 @@ const buildings = [
         height: 2,  // Height in block units
         color: GLASS_FACTORY_BLUE,
         costs: {     // Resource codenames match economy fields
-            rock: 20,
-            sand: 30
+            rock: 2,
+            sand: 3
         },
         outputs: {
             money: 1
@@ -46,8 +46,8 @@ const buildings = [
         color: SOLAR_PANEL_BLUE,
         costs: {     // Resource codenames match economy fields
             rock: 5,
-            sand: 10,
-            money: 5
+            sand: 2,
+            money: 2
         },
         outputs: {
             power: 1
@@ -64,9 +64,9 @@ const buildings = [
         height: 3,  // Height in block units
         color: GREENHOUSE_GREEN,
         costs: {     // Resource codenames match economy fields
-            rock: 30,
-            sand: 30,
-            money: 20
+            rock: 3,
+            sand: 3,
+            money: 2
         },
         outputs: {
             food: 1

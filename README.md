@@ -69,3 +69,5 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 8. When Infrastructure placeStructure method performs a build, have it set the addedBuilding flag to true, to signal the Engine to de-select the current building... only if the player can no longer afford the structure!
 
 9. Prevent structures from piling up by adding a method to the Infra class to 'detect structures' - run as part of the build consideration process to check if there are other buildings potentially in the way of the cursor.
+
+10. When a building is purchased, subtract the cost from the resource tallies.

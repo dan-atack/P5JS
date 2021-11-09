@@ -22,6 +22,8 @@ function mousePressed() {
   infra.checkForClick(mouseX, mouseY, menu.buildingSelected, economy); // Infra needs to know which building and what money you gots
   // Was a menu button clicked? (menu)
   menu.checkForClick(mouseX, mouseY);
+  // Deselect building production if insufficient resources remain:
+  menu.checkIfJustPurchased(infra, economy);
 }
 
 function draw() {
