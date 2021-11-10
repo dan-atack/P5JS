@@ -5,6 +5,8 @@ class Infrastructure {
         this.buildings = [];
         this.justBuilt = null; // When a building has just been added, set this to the building's data
         this.missingResources = []  // When a building fails the cost check, list the resources needed
+        this.productionTicker = 0;
+        this.productionMaxTick = 60;
     }
 
     // Mouse click handler to determine if a click event should be interpreted as a building placement request:
@@ -73,12 +75,12 @@ class Infrastructure {
             const topInRange = y < yRange[0] && y >= yRange[1];
             const rightInRange = right > xRange[0] && right < xRange[1];
             const bottomInRange = bottom > yRange[1] && bottom < yRange[0];
-            console.log(y);
-            console.log(yRange);
-            console.log(leftInRange);
-            console.log(topInRange);
-            console.log(rightInRange);
-            console.log(bottomInRange);
+            // console.log(y);
+            // console.log(yRange);
+            // console.log(leftInRange);
+            // console.log(topInRange);
+            // console.log(rightInRange);
+            // console.log(bottomInRange);
             // Obstruction is true if: x is in range AND (y OR y + height) is also in range
             // Set obstruction to true if any part of new building's proposed location overlaps existing structure
             if (leftInRange && (topInRange || bottomInRange)) obstruction = true;
@@ -103,22 +105,63 @@ class Infrastructure {
 
     // Unset missing resources and just built flags:
     resetFlags() {
-        console.log('reset')
         this.justBuilt = null;
         this.missingResources = [];
     }
 
-    calculateIncome(building) {
-        // Get the dictionary or a building's resource outputs
+    runBuildingProduction(consumes, outputs, economy) {
+        // Go through a building's outputs and add each one to the economy stockpile AND reduce stockpiles for resources consumed
+        Object.keys(consumes).forEach((resource) => {
+            economy[resource] -= consumes[resource];
+        })
+        Object.keys(outputs).forEach((resource) => {
+            economy[resource] += outputs[resource];
+        })
     }
 
-    calculateMaintenance(building) {
-        // Get the dictionary for a building's resource consumption needs
+    calculateBuildingConsumption(consumes, economy) {
+        // Go though a buildings consumption list, and if all needs are met return object with success status
+        const response = {
+            success: true,
+            shortages: []
+        }
+        const resources = Object.keys(consumes);
+        // If there is a shortage, add the name of the missing resource to the shortages list
+        resources.forEach((resource) => {
+            if (economy[resource] < consumes[resource]) {
+                response.shortages.push(resource);
+            }
+        })
+
+        // If there are any shortages, set success status to false before returning the response object
+        if (response.shortages.length > 0) {
+            response.success = false;
+        }
+
+        return response;
     }
 
+    // Top level economic function loops thru buildings list and for each one carries out the production/consumption routines
     handleProduction(economy) {
-        // Go through buildings list; for each building check its resource output fields AND resource consumption fields
-        // When the consumption needs are available, reduce their quantity/ies and add the output/s to the economy
+        // Advance production ticker if it is not on the max tick (which is the equivalent of the economy's "interval" value
+        if (this.productionTicker < this.productionMaxTick) {
+            this.productionTicker ++;
+        } else {
+            // Go through buildings list; for each building check its resource output fields AND resource consumption fields
+            this.buildings.forEach((building) => {
+                const consumes = building.consumes;
+                const outputs = building.outputs;
+                // Check if consumption needs can be met:
+                const response = this.calculateBuildingConsumption(consumes, economy);
+                if (response.success === true) {    // If so, run the production function to update the game's economy
+                    this.runBuildingProduction(consumes, outputs, economy)
+                    building.shortfalls = [];   // If the building was showing a shortfall before, clean it up
+                } else {
+                    building.shortfalls = response.shortages;
+                }
+            })
+            this.productionTicker = 0;
+        }        
     }
 
     renderBuildings() {

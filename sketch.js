@@ -49,6 +49,7 @@ function draw() {
   fill(FOOD_GREEN);
   text(`Food: ${economy.food}`, 0, 160, 256, 128);
   economy.advanceFoodDepletionTicker();
+  infra.handleProduction(economy);
   // Building ghost follows cursor and 'snaps to' map grid if building is selected:
   if (menu.buildingSelected.name) {
     // Round mouse position to nearest grid location:

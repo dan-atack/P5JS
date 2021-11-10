@@ -50,7 +50,7 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 5. Have the building's ghost image 'snap to' the map grid, by writing a function that rounds the mouseX/mouseY values to the nearest interval of block width.
 
-### Phase 4 - Building Placement and Purchasing - November 8, 2021
+### Phase 4 - Building Placement and Purchasing - November 8 + 9, 2021
 
 1. Create a data file with details for each building option; each building's details can be given as a json-like object. Details include width and height (in block units), resource costs, resource outputs, name and description text (to be displayed on the button/below the buttons in the remaining space in the sidebar).
 
@@ -66,12 +66,24 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 7. Finally, prevent structures from piling up by adding a method to the Infra class to 'detect structures' - run as part of the build consideration process to check if there are other buildings potentially in the way of the cursor. Detecting terrain features will be handled separately at a later time.
 
-### Phase 5 -
+### Phase 5 - Calculating Building Resource Production and Displaying that Info - November 10, 2021
 
-### 11. Add text displays for resource production (printing info from the Infra function described on step 6) rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss.
+1. Add method for the Infrastructure class to loop through its buildings list in order to call two other functions, call them 'produce' and 'consume' so that, whenever resource needs are met, a building will consume resources and produce its output.
 
-### 4. Add method for the Infrastructure class to calculate resource generation from its buildings list...
+2. Create Infrastructure produce function.
 
-### 5. Add another method for Infra class to calculate resource CONSUMPTION from all buildings.
+3. Create Infrastructure consume function.
 
-### 6. Add higher-level Infra method, handleProduction, to call both the above functions, and store the balances in fields whose names correspond to the Economy class's resource names.
+### 4. Add text displays for resource production rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss for each cycle.
+
+### 5. When a building has insufficient resources to run, render it with a little red circle to denote the shortage.
+
+### 6. Make buildings' production toggleable by clicking on the building - each building has a click handler function that toggles its activeProduction field true or false.
+
+### 7. Have the Menu render additional info about each building option: build costs, resource use and resource outputs.
+
+### Phase 6 - Game Over Man - November 11, 2021
+
+### 1. Add conditions for the game to end if the player's food supply goes below zero. At this point, all the game's operations cease and a new screen is shown with the option to start again.
+
+### 2. Add another condition for a 'victory screen' to be shown instead of the game over page. Again, it should allow the player to start a new game, should they wish to.

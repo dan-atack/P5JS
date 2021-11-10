@@ -6,8 +6,9 @@ class Building {
         this.color = buildingData.color;
         this.width = buildingData.width * BLOCK_WIDTH;
         this.height = buildingData.height * BLOCK_WIDTH;
-        this.output = buildingData.output;
+        this.outputs = buildingData.outputs;
         this.consumes = buildingData.consumes;
+        this.shortfalls = [];           // Keep a list of shortfalls, to display symbols for missing resources (TODO)
     }
 
     render()  {
