@@ -6,7 +6,15 @@ class Infrastructure {
         this.justBuilt = null; // When a building has just been added, set this to the building's data
         this.missingResources = []  // When a building fails the cost check, list the resources needed
         this.productionTicker = 0;
-        this.productionMaxTick = 60;
+        this.productionRates = {    // MUST BE in the same order as the economy class to correspond with stockpile values on screen
+            ice: 0,
+            sand: 0,
+            rock: 0,
+            cO2: 0,
+            power: 0,
+            money: 0,
+            food: -2,   // Hacky way to represent that the economy class automatically decrements this value
+        }
     }
 
     // Mouse click handler to determine if a click event should be interpreted as a building placement request:
@@ -15,6 +23,10 @@ class Infrastructure {
         if (buildingData.name) {
             this.placeBuilding(mouseX, mouseY, buildingData, economy);
         }
+        // Check for clicks on existing structures:
+        this.buildings.forEach((building) => {
+            building.checkForClick(mouseX, mouseY);
+        })
     }
 
     // Handles the whole building process, from pre-build checks (cost, obstruction) to payment and setting just built flag:
@@ -36,7 +48,7 @@ class Infrastructure {
                     console.log('Obstruction detected: building in the way');
                 }
             } else {
-                console.log(this.missingResources); // TODO: Add in-game visual display of this message
+                console.log('shortage reported'); // TODO: Add in-game visual display of missing resources list
             }
         } else {
             console.log('out of bounds'); // TODO: Add in-game visual display of this message
@@ -54,7 +66,6 @@ class Infrastructure {
             }
         })
         if (shortages.length > 0) {
-            console.log('shortage reported')
             this.missingResources = shortages;   // If there are shortages, keep track of their names
         } else {
             return affordable;  // Otherwise return true, meaning green-light the building
@@ -144,21 +155,23 @@ class Infrastructure {
     // Top level economic function loops thru buildings list and for each one carries out the production/consumption routines
     handleProduction(economy) {
         // Advance production ticker if it is not on the max tick (which is the equivalent of the economy's "interval" value
-        if (this.productionTicker < this.productionMaxTick) {
+        if (this.productionTicker < ECONOMY_TICK_INTERVAL) {
             this.productionTicker ++;
         } else {
             // Go through buildings list; for each building check its resource output fields AND resource consumption fields
             this.buildings.forEach((building) => {
-                const consumes = building.consumes;
-                const outputs = building.outputs;
-                // Check if consumption needs can be met:
-                const response = this.calculateBuildingConsumption(consumes, economy);
-                if (response.success === true) {    // If so, run the production function to update the game's economy
-                    this.runBuildingProduction(consumes, outputs, economy)
-                    building.shortfalls = [];   // If the building was showing a shortfall before, clean it up
-                } else {
-                    building.shortfalls = response.shortages;
-                }
+                if (!building.productionToggled) {  // Only calculate buildings that aren't toggled
+                    const consumes = building.consumes;
+                    const outputs = building.outputs;
+                    // Check if consumption needs can be met:
+                    const response = this.calculateBuildingConsumption(consumes, economy);
+                    if (response.success === true) {    // If so, run the production function to update the game's economy
+                        this.runBuildingProduction(consumes, outputs, economy)
+                        building.shortfalls = [];   // If the building was showing a shortfall before, clean it up
+                    } else {
+                        building.shortfalls = response.shortages;
+                    }
+                } 
             })
             this.productionTicker = 0;
         }        

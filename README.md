@@ -74,13 +74,15 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 3. Create Infrastructure consume function.
 
-### 4. Add text displays for resource production rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss for each cycle.
+### 4. Add text displays for resource production rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss for each cycle. NOTE: This and all other economy displays should be handled by the Economy class and called in bulk by the top level file (e.g. renderEconomicData()).
 
 ### 5. When a building has insufficient resources to run, render it with a little red circle to denote the shortage.
 
 ### 6. Make buildings' production toggleable by clicking on the building - each building has a click handler function that toggles its activeProduction field true or false.
 
-### 7. Have the Menu render additional info about each building option: build costs, resource use and resource outputs.
+7. Have the Menu render additional info about each building option: build costs, resource use and resource outputs.
+
+### 8. Add power to list of displayed resources.
 
 ### Phase 6 - Game Over Man - November 11, 2021
 

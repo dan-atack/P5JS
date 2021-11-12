@@ -9,7 +9,7 @@ class Menu {
         this.button2 = {x: this.x + 0, y: 256, name: 'Solar Panel'};
         this.button3 = {x: this.x + 128, y: 128, name: 'Glass Factory'};
         this.button4 = {x: this.x + 128, y: 256, name: 'Greenhouse'};
-        this.buttonPadding = 12;
+        this.buttonPadding = 8;
         this.buttonWidth = this.width / 2;
         this.buttonHeight = this.height / 4;
         this.nullBuildingShape = {   // Essentially a 'null' building template
@@ -45,12 +45,45 @@ class Menu {
         rect(this.button3.x, this.button3.y, this.buttonWidth, this.buttonHeight);
         rect(this.button4.x, this.button4.y, this.buttonWidth, this.buttonHeight);
         // Label buttons
-        fill(RED_ROCK);
+        this.renderButtonText(this.button1);
+        this.renderButtonText(this.button2);
+        this.renderButtonText(this.button3);
+        this.renderButtonText(this.button4);
+    }
+
+    // Separate sub-function to render the text for buttons:
+    renderButtonText(button) {
+        fill(SOLAR_PANEL_BLUE);
         textSize(16);
-        text(this.button1.name, this.button1.x + this.buttonPadding, this.button1.y + this.buttonPadding, 256, 128);
-        text(this.button2.name, this.button2.x + this.buttonPadding, this.button2.y + this.buttonPadding, 256, 128);
-        text(this.button3.name, this.button3.x + this.buttonPadding, this.button3.y + this.buttonPadding, 256, 128);
-        text(this.button4.name, this.button4.x + this.buttonPadding, this.button4.y + this.buttonPadding, 256, 128);
+        text(button.name, button.x + this.buttonPadding, button.y + this.buttonPadding, 256, 128);
+        // Render building cost:
+        fill(RED_ROCK);
+        textSize(14);
+        text('Building Costs:', button.x + this.buttonPadding, button.y + this.buttonPadding * 3, 256, 128);
+        textSize(12);
+        // Building info is indexed to buildings list:
+        const building = buildings.find((building) => building.name === button.name);
+        // Display construction costs - resoure names above, and quantities below:
+        Object.keys(building.costs).forEach((resource, idx) => {
+            text(resource, button.x + this.buttonPadding + 32 * idx, button.y + this.buttonPadding * 5, 256, 128);
+            text(building.costs[resource], button.x + this.buttonPadding + 16 + (idx * 32), button.y + this.buttonPadding * 7, 256, 128);
+        })
+        fill(GREENHOUSE_GREEN);
+        textSize(14);
+        // Display building production output:
+        text(`Yields 1 ${Object.keys(building.outputs)[0]}`, button.x + this.buttonPadding, button.y + this.buttonPadding * 9, 256, 128)
+        fill(NEGATIVE_RED);
+        text('Consumes:', button.x + this.buttonPadding, button.y + this.buttonPadding * 11, 256, 128)
+        const consumes = Object.keys(building.consumes);
+        // Display building 'consumption' costs (upkeep):
+        consumes.forEach((resource, idx) => {
+            if (consumes.length > 1) {
+                textSize(10);
+            } else {
+                textSize(12)
+            }
+            text(`${building.consumes[resource]} ${resource} `, button.x + this.buttonPadding + (42 * idx), button.y + this.buttonPadding * 13, 256, 128);
+        })
     }
 
     // Engine calls this function whenever there is a click; it detects if a menu button was clicked

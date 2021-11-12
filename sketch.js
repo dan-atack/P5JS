@@ -34,22 +34,9 @@ function draw() {
   player.handleUpdates();
   menu.render();
   infra.renderBuildings();
-  fill('#FCD63B');
-  textSize(24);
-  fill(BLUE_ICE);
-  text(`Ice: ${economy.ice}`, 0, 0, 256, 128);
-  fill(RED_ROCK);
-  text(`Sand: ${economy.sand}`, 0, 32, 256, 128);
-  fill(MINERAL_GRAY);
-  text(`Rock: ${economy.rock}`, 0, 64, 256, 128);
-  fill(SIDEBAR_GRAY);
-  text(`CO2: ${economy.cO2}`, 0, 96, 256, 128);
-  fill(YELLOW_SAND);
-  text(`Money: ${economy.money}`, 0, 128, 256, 128);
-  fill(FOOD_GREEN);
-  text(`Food: ${economy.food}`, 0, 160, 256, 128);
-  economy.advanceFoodDepletionTicker();
   infra.handleProduction(economy);
+  economy.advanceFoodDepletionTicker();
+  economy.renderResourceDisplays();
   // Building ghost follows cursor and 'snaps to' map grid if building is selected:
   if (menu.buildingSelected.name) {
     // Round mouse position to nearest grid location:
@@ -57,6 +44,7 @@ function draw() {
     const gridY = Math.floor(mouseY / BLOCK_WIDTH) * BLOCK_WIDTH;
     const buildingWidth = menu.buildingSelected.width * BLOCK_WIDTH;
     const buildingHeight = menu.buildingSelected.height * BLOCK_WIDTH;
+    fill(BRIGHT_GREEN);
     rect(gridX, gridY, buildingWidth, buildingHeight);
   }
 }
