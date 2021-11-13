@@ -92,7 +92,7 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 3. Add reset functions for the infra, economy, menu and player classes, to be called when the game is restarted.
 
-### Phase 7 - Rover Mining Range and 2D Terrain - November 12, 2021
+### Phase 7 - Rover Mining Range and 2D Terrain - November 12 + 13, 2021
 
 1. Introduce a maximum distance for the rover to be able to mine at. When the Economy checks the map it will also be given the Player's info so it can check for x distance and only permit mining if the player is close enough.
 
@@ -113,7 +113,7 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
     - Oxygen Extractor (rocks plus power into oxygen)
     - Fuel Plant (CO2 plus power into fuel)
     - Living Quarters (???)
-    -
+    - Radio Tower (Goal of the game is to build this??)
 
 ### 3. Add field to Block class: timesClicked, to determine when a resource gets 'tapped out' and disappears!
 

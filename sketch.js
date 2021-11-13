@@ -73,7 +73,7 @@ function draw() {
     economy.advanceFoodDepletionTicker();
     economy.renderResourceDisplays();
     player.render();
-    player.handleUpdates();
+    player.handleUpdates(map1);
     // Show ETA until rescue (aka victory):
     text(`Rescue ETA: ${RESCUE_COUNTDOWN_IN_TICKS - gameTicksElapsed} Days`, 256, 8, 256, 128);
     // Building ghost follows cursor and 'snaps to' map grid if building is selected:

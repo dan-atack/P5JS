@@ -26,8 +26,25 @@ class Player {
         }
     }
 
-    handleUpdates() {
+    handleUpdates(map) {
         this.handleKeyDowns();
+        this.detectTerrainBeneath(map);
+    }
+
+    detectTerrainBeneath(map) {
+        // Show the block that's directly below the middle wheel, as well as the block that's just above it (inside the actual wheel radius) to trigger an elevation increase
+        const columnX = Math.floor(this.x / BLOCK_WIDTH);
+        const gridY = Math.floor(this.y / BLOCK_WIDTH) * BLOCK_WIDTH;
+        const insideWheelRadius = map.columns[columnX].filter((block) => block.y === gridY);
+        const directlyBelow = map.columns[columnX].filter((block) => block.y === gridY + BLOCK_WIDTH);
+        // Reduce elevation if there is nothing 'directly below':
+        if (directlyBelow.length === 0) {
+            this.y += BLOCK_WIDTH;
+        }
+        // Increase elevation if there is a block within the wheel radius:
+        if (insideWheelRadius.length > 0) {
+            this.y -= BLOCK_WIDTH;
+        }
     }
 
     reset() {
