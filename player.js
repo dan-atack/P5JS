@@ -1,7 +1,10 @@
 class Player {
     constructor() {
-        this.x = (WORLD_WIDTH / 4) * PLAYER_WIDTH;
-        this.y = WORLD_HEIGHT / 2 * PLAYER_WIDTH - PLAYER_WIDTH * 1.5;
+        this.startX = (WORLD_WIDTH / 4) * PLAYER_WIDTH - BLOCK_WIDTH * 2;
+        this.startY = WORLD_HEIGHT / 2 * PLAYER_WIDTH - PLAYER_WIDTH;
+        this.x = this.startX;
+        this.y = this.startY
+        this.maxMiningRange = 5 * BLOCK_WIDTH; // How many blocks' width away can the player mine?
     }
 
     render() {
@@ -24,8 +27,12 @@ class Player {
     }
 
     handleUpdates() {
-
         this.handleKeyDowns();
+    }
+
+    reset() {
+        this.x = this.startX;
+        this.y = this.startY;
     }
 
 }

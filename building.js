@@ -16,6 +16,10 @@ class Building {
         fill(this.color);
         if (this.productionToggled) fill(TOGGLED_RED);
         rect(this.x, this.y, this.width, this.height);
+        // Show shortfalls if there are any:
+        if (this.shortfalls.length > 0) {
+            this.renderShortfalls();
+        }
     }
 
     checkForClick(mouseX, mouseY) {
@@ -28,6 +32,13 @@ class Building {
                 this.productionToggled = true;
             }
         }
+    }
+
+    renderShortfalls() {
+        this.shortfalls.forEach((resource, idx) => {
+            fill(NEGATIVE_RED);
+            circle(this.x + 4 + 16 * idx, this.y + 4, 12);
+        })
     }
 
 }

@@ -6,15 +6,6 @@ class Infrastructure {
         this.justBuilt = null; // When a building has just been added, set this to the building's data
         this.missingResources = []  // When a building fails the cost check, list the resources needed
         this.productionTicker = 0;
-        this.productionRates = {    // MUST BE in the same order as the economy class to correspond with stockpile values on screen
-            ice: 0,
-            sand: 0,
-            rock: 0,
-            cO2: 0,
-            power: 0,
-            money: 0,
-            food: -2,   // Hacky way to represent that the economy class automatically decrements this value
-        }
     }
 
     // Mouse click handler to determine if a click event should be interpreted as a building placement request:
@@ -179,6 +170,13 @@ class Infrastructure {
 
     renderBuildings() {
         this.buildings.forEach((building) => building.render());
+    }
+
+    reset() {
+        this.buildings = [];
+        this.justBuilt = null;
+        this.missingResources = [];
+        this.productionTicker = 0;
     }
 
 }

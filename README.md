@@ -74,18 +74,53 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 3. Create Infrastructure consume function.
 
-### 4. Add text displays for resource production rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss for each cycle. NOTE: This and all other economy displays should be handled by the Economy class and called in bulk by the top level file (e.g. renderEconomicData()).
+4. Add text displays for resource production rates next to resource quantity displays. Include logic for setting text color to red or green if there is gain/loss for each cycle. NOTE: This and all other economy displays should be handled by the Economy class and called as part of the general-purpose economy render function.
 
-### 5. When a building has insufficient resources to run, render it with a little red circle to denote the shortage.
+5. When a building has insufficient resources to run, render it with a little red circle to denote the shortage.
 
-### 6. Make buildings' production toggleable by clicking on the building - each building has a click handler function that toggles its activeProduction field true or false.
+6. Make buildings' production toggleable by clicking on the building - each building has a click handler function that toggles its activeProduction field true or false.
 
 7. Have the Menu render additional info about each building option: build costs, resource use and resource outputs.
 
-### 8. Add power to list of displayed resources.
+8. Add power to list of displayed resources.
 
 ### Phase 6 - Game Over Man - November 11, 2021
 
-### 1. Add conditions for the game to end if the player's food supply goes below zero. At this point, all the game's operations cease and a new screen is shown with the option to start again.
+1. Add conditions for the game to end if the player's food supply goes below zero. At this point, all the game's operations cease and a message is shown with the option to start again.
 
-### 2. Add another condition for a 'victory screen' to be shown instead of the game over page. Again, it should allow the player to start a new game, should they wish to.
+2. Add another condition for a victory message to be shown after the player has survived for a certain amount of time. Again, it should allow the player to start a new game, should they wish to.
+
+3. Add reset functions for the infra, economy, menu and player classes, to be called when the game is restarted.
+
+### Phase 7 - Rover Mining Range and 2D Terrain - November 12, 2021
+
+1. Introduce a maximum distance for the rover to be able to mine at. When the Economy checks the map it will also be given the Player's info so it can check for x distance and only permit mining if the player is close enough.
+
+2. Make a new method for the Map class, to render column-based terrain when given an array of arrays. BONUS: Can benefit from the Blockland Map Editor!
+
+### 3. Add a method for the Player to detect the terrain beneath them.
+
+### 4. Add a method for the Player to detect the terrain behind and in front of them.
+
+### 5. Add a method for the Player's elevation to increase if the terrain beneath them rises.
+
+### Phase 8 And Beyond - Final Ideas for Monday, November 15 Presentation
+
+### 1. Add new resource types, air and fuel, to the Economy class.
+
+### 2. Add another 4 buildings to the Menu, along with two more buttons to cycle between building options:
+
+    - Oxygen Extractor (rocks plus power into oxygen)
+    - Fuel Plant (CO2 plus power into fuel)
+    - Living Quarters (???)
+    -
+
+### 3. Add field to Block class: timesClicked, to determine when a resource gets 'tapped out' and disappears!
+
+### 4. Add Player field, rover fuel, to limit how far you can travel in the rover!
+
+### 5. Add oxygen to starting supply and to game-over calculus.
+
+### 6. Change money resource to glass.
+
+### 7. Re-adjust resource purchase costs for all buildings.

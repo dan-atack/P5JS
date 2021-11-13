@@ -25,14 +25,18 @@ class Economy {
     }
 
     // loop through the blocks in the map to match to a mouse position
-    checkForResources(map, mouseX, mouseY) {
-        map.blocks.forEach((block) => {
-            // If mouse y = block y is the top of the block, mouse y + block width = bottom of block
-            const yMatch = (mouseY >= block.y && mouseY < block.y + BLOCK_WIDTH);
-            const xMatch = (mouseX >= block.x && mouseX < block.x + BLOCK_WIDTH);
-            if (yMatch && xMatch) {
-                this.addResource(block.resourceName, 1);
-            }
+    checkForResources(map, mouseX, mouseY, player) {
+        map.columns.forEach((column) => {
+            column.forEach((block) => {
+                // Only allow mining to occur if player is sufficiently close:
+                const roverInRange = block.checkForRoverDistance(player);
+                // If mouse y = block y is the top of the block, mouse y + block width = bottom of block
+                const yMatch = (mouseY >= block.y && mouseY < block.y + BLOCK_WIDTH);
+                const xMatch = (mouseX >= block.x && mouseX < block.x + BLOCK_WIDTH);
+                if (yMatch && xMatch && roverInRange) {
+                    this.addResource(block.resourceName, 1);
+                }
+            })
         });
       }
 
@@ -90,6 +94,26 @@ class Economy {
                 text(`( ${this.lastTickStockpiles[resource][1]})`, 32 + resource.length * 24, idx * 32, 256, 128);
             }
         })
-    }    
+    }
+
+        reset() {
+        this.ice = 0;
+        this.sand = 0;
+        this.rock = 0;
+        this.cO2 = 0;
+        this.power = 0;
+        this.money = 0;
+        this.food = 180;
+        this.lastTickStockpiles = {
+            ice: [0, 0],
+            sand: [0, 0], 
+            rock: [0, 0], 
+            cO2: [0, 0], 
+            power: [0, 0], 
+            money: [0, 0], 
+            food: [181, -1],
+        }
+        this.foodDepletionTick = 0;
+    }
 
 }

@@ -27,4 +27,12 @@ class Block {
         rect(this.x, this.y, BLOCK_WIDTH, BLOCK_WIDTH,);
     }
 
+    // When mouseups are checked by the economy, only allow mining if player vehicle is sufficiently close:
+    checkForRoverDistance(player) {
+        const withinRangeLeft = this.x >= player.x - player.maxMiningRange;
+        const withinRangeRight = this.x <= player.x + player.maxMiningRange;
+        // return only if true:
+        if (withinRangeLeft && withinRangeRight) return true;
+    }
+
 }

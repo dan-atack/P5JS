@@ -1,30 +1,31 @@
 class Map {
     constructor() {
-        this.blocks = [];
         this.horizontalOffset = 0;
-    }
-
-    renderInitialMap() {
-        for (let i = 0; i < WORLD_WIDTH; i++) {
-            const block = new Block(i * BLOCK_WIDTH, 496, 1);
-            block.render();
-            this.blocks.push(block);
-            if (i % 3 == 0) {
-                const otherBlock = new Block(i * BLOCK_WIDTH, 480, 3);
-                otherBlock.render();
-                this.blocks.push(otherBlock);
-            } else {
-                const otherBlock = new Block(i * BLOCK_WIDTH, 480, 2);
-                otherBlock.render();
-                this.blocks.push(otherBlock);
-            }
-        }
+        this.columns = [];
     }
 
     renderMap() {
-        this.blocks.forEach((block) => {
-            block.render();
+        this.columns.forEach((column) => {
+            column.forEach((block) => {
+                block.render();
+            })
         })
+    }
+
+    // Initial terrain renderer (Blockland style but with array for columns list as well as for blocks within a column)
+    renderTerrainColumns(columns) {
+        columns.forEach((column, idx) => {
+            this.columns.push([]);
+            column.forEach((blockType, jdx) => {
+                if (blockType.type != 0) {  // Ignore 'empty' blocks (ensures easy compatibility with BlockLand map editor!)
+                    const x = idx * BLOCK_WIDTH;
+                    const y = (WORLD_HEIGHT * BLOCK_WIDTH) - (jdx * BLOCK_WIDTH) - BLOCK_WIDTH;
+                    const protoBlock = new Block(x, y, blockType);
+                    this.columns[idx].push(protoBlock);
+                    protoBlock.render();
+                }
+            })
+        });
     }
 
 }
