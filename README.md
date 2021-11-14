@@ -98,29 +98,50 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 2. Make a new method for the Map class, to render column-based terrain when given an array of arrays. BONUS: Can benefit from the Blockland Map Editor!
 
-### 3. Add a method for the Player to detect the terrain beneath them.
+3. Add a method for the Player to detect the terrain beneath them, two Blocks deep, so that the car can tell if you are climbing/descending.
 
-### 4. Add a method for the Player to detect the terrain behind and in front of them.
-
-### 5. Add a method for the Player's elevation to increase if the terrain beneath them rises.
+4. Add a method for the Player's elevation to increase if the terrain beneath them rises, and decrease if it falls away.
 
 ### Phase 8 And Beyond - Final Ideas for Monday, November 15 Presentation
 
-### 1. Add new resource types, air and fuel, to the Economy class.
+1. Add new resource type, air, to the Economy class. Along with food, this now also runs out automatically and must be replenished to prevent catastrophic mission failure!
 
 ### 2. Add another 4 buildings to the Menu, along with two more buttons to cycle between building options:
 
-    - Oxygen Extractor (rocks plus power into oxygen)
+    - Oxygen Extractor (rocks plus power into air)
     - Fuel Plant (CO2 plus power into fuel)
     - Living Quarters (???)
     - Radio Tower (Goal of the game is to build this??)
 
 ### 3. Add field to Block class: timesClicked, to determine when a resource gets 'tapped out' and disappears!
 
-### 4. Add Player field, rover fuel, to limit how far you can travel in the rover!
+### 4. Player movement consumes power resource, so that when you run out of juice you can no longer move (therefore an initial power supply is needed).
 
 ### 5. Add oxygen to starting supply and to game-over calculus.
 
-### 6. Change money resource to glass.
+6. Change money resource to glass.
 
 ### 7. Re-adjust resource purchase costs for all buildings.
+
+### 8. Re-adjust resource consumption/production rates for all buildings.
+
+### 9. Add resourceYield value to Blocks, so that the Player can harvest different amounts of resources from them. Ideally this will not be mapped directly to the Block's type, such that different Blocks of the same type can have different 'densities' of the same resource.
+
+### 10. Find out how to do limited-opacity rendering, and add a resource extraction radius around the Player car.
+
+### 11. Add buttons to sidebar menu to toggle between 'building' and 'construction' mode. Construction mode will be required to place buildings, and also allows removal of terrain tiles...
+
+### 12. Add logic to Infra/Building placement process so that buildings can only be built:
+
+    - On flat ground (all 'floor' blocks touch the ground and no terrain is within the proposed structure's boundaries)
+    - On top of other buildings (and only if the 'roof' of the underlying structure is similarly 'flat')
+
+### 13. Add a clock to illustrate the passage of time between economy ticks.
+
+## Food for Further Thought:
+
+### 1. Introduce categories of resources (make a paper chart, perhaps) along the lines of 'raw material,' 'refined material,' 'organic,' etc.
+
+### 2. Similarly, categorize buildings in a way that maps to the different resource types, so 'basic' structures can be built with 'raw materials' whereas 'advanced' structures require more 'refined materials,' etc.
+
+### 3. Draw out some flowcharts depicting how resource production occurs in relation to the different structures, in terms of which buildings can be made with which resources, and which buildings produce what.

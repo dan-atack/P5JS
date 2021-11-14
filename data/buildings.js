@@ -10,7 +10,7 @@ const buildings = [
         costs: {     // Resource codenames match economy fields
             ice: 2,
             rock: 2,
-            money: 2
+            glass: 2
         },
         outputs: {  // Resource codenames match economy fields; outputs are added on a 'tick' basis similar to how food is reduced.
             cO2: 1
@@ -31,7 +31,7 @@ const buildings = [
             sand: 3
         },
         outputs: {
-            money: 1
+            glass: 1
         },
         consumes: {
             sand: 2
@@ -47,13 +47,13 @@ const buildings = [
         costs: {     // Resource codenames match economy fields
             rock: 5,
             sand: 2,
-            money: 2
+            glass: 2
         },
         outputs: {
             power: 1
         },
         consumes: {
-            money: 0    // TODO: Establish how to treat 'zero-cost' structures
+            glass: 0    // TODO: Establish how to treat 'zero-cost' structures
         },
         buildTime: 0    // Will use this later to represent structures being built gradually
     },
@@ -66,7 +66,7 @@ const buildings = [
         costs: {     // Resource codenames match economy fields
             rock: 3,
             sand: 3,
-            money: 2
+            glass: 2
         },
         outputs: {
             food: 1

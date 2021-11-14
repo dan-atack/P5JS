@@ -19,9 +19,10 @@ class Player {
     }
 
     handleKeyDowns() {
-        if (keyIsDown(68)) {
+        // S key moves to the right - make sure to limit movement range to the edge of the world
+        if (keyIsDown(68) && this.x + PLAYER_WIDTH < WORLD_WIDTH * BLOCK_WIDTH) {
             this.x ++;
-        } else if (keyIsDown(65)){
+        } else if (keyIsDown(65) && this.x > 0){
             this.x --;
         }
     }

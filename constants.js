@@ -23,6 +23,7 @@ const BLUE_ICE = '#AED8E5';
 const SOLAR_PANEL_BLUE = '#012846';
 const GLASS_FACTORY_BLUE = '#0478D2';
 
+const AIRY_GRAY = '#FAFAFA';
 const SIDEBAR_GRAY = '#AAAEBA';
 const MINERAL_GRAY = '#82777C';
 

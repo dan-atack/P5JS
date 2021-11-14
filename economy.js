@@ -5,16 +5,18 @@ class Economy {
         this.rock = 0;
         this.cO2 = 0;       // consumed by greenhouse to produce food
         this.power = 0;     // Initially at least, power will just be another thing you can produce, stockpile and spend.
-        this.money = 0;     // you can't eat money!
+        this.glass = 0;     // One of the staple 'processed' resources, made from sand
         this.food = 180;    // goal of the game is to make more of this
+        this.air = 180;     // GIVE DESE PEOPLE EAEAIR!!!
         this.lastTickStockpiles = { // Keep track of the previous values for all resources to establish rates of change:
             ice: [0, 0],    // Values are tuples; first is previous value, second is diff from previous
             sand: [0, 0], 
             rock: [0, 0], 
             cO2: [0, 0], 
             power: [0, 0], 
-            money: [0, 0], 
+            glass: [0, 0], 
             food: [181, -1],    // Make sure any initial values (plus initial change rates) and change rates are reflected here too
+            air: [181, -1],
         }
         this.foodDepletionTick = 0; // Food is reduced by one unit whenever the depletion ticker hits zero
     }
@@ -40,6 +42,7 @@ class Economy {
         });
       }
 
+    // Until we add a 'population' class, this function handles all deductions that aren't related to production (food and air)
     advanceFoodDepletionTicker() {
         // If ticker is not full, advance it by one:
         if (this.foodDepletionTick < ECONOMY_TICK_INTERVAL) {
@@ -48,6 +51,7 @@ class Economy {
             // If ticker is full, reset it and subtract one food
             this.foodDepletionTick = 0;
             this.food --;
+            this.air --;
         }
     }
 
@@ -65,11 +69,13 @@ class Economy {
         text(`CO2: ${this.cO2}`, 0, 96, 256, 128);
         fill(POWER_YELLOW);
         text(`Power: ${this.power}`, 0, 128, 256, 128)
-        fill(YELLOW_SAND);
-        text(`Money: ${this.money}`, 0, 160, 256, 128);
+        fill(GLASS_FACTORY_BLUE);
+        text(`Glass: ${this.glass}`, 0, 160, 256, 128);
         fill(FOOD_GREEN);
         text(`Food: ${this.food}`, 0, 192, 256, 128);
         this.renderProductionRates();
+        fill(AIRY_GRAY);
+        text(`Air: ${this.air}`, 0, 224, 256, 128);
     }
 
     // This goes next to the economy's resource stockpile displays on the main UI:
@@ -102,7 +108,7 @@ class Economy {
         this.rock = 0;
         this.cO2 = 0;
         this.power = 0;
-        this.money = 0;
+        this.glass = 0;
         this.food = 180;
         this.lastTickStockpiles = {
             ice: [0, 0],
@@ -110,7 +116,7 @@ class Economy {
             rock: [0, 0], 
             cO2: [0, 0], 
             power: [0, 0], 
-            money: [0, 0], 
+            glass: [0, 0], 
             food: [181, -1],
         }
         this.foodDepletionTick = 0;
