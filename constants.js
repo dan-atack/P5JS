@@ -6,7 +6,7 @@ const SIDEBAR_WIDTH = 256 // Sidebar width in pixels
 const BLOCK_WIDTH = 16 // Block width in pixels
 const PLAYER_WIDTH = 32 // Player wheel / chassis dimensions
 const ECONOMY_TICK_INTERVAL = 120   // Standardize the amount of game ticks between economic updates (game is ~ 60 ticks per second)
-const RESCUE_COUNTDOWN_IN_TICKS = 180 // Amount of tick intervals until the game ends in victory for the player
+const RESCUE_COUNTDOWN_IN_TICKS = 90 // Amount of tick intervals until the game ends in victory for the player
 
 // Colours, in ROYGBIV order (and then grays from lighter to darker)
 

@@ -8,7 +8,7 @@ const buildings = [
         height: 3,  // Height in block units
         color: GLASS_FACTORY_BLUE,
         costs: {     // Resource codenames match economy fields
-            rock: 2,
+            rock: 4,
             sand: 4
         },
         outputs: {
@@ -28,7 +28,7 @@ const buildings = [
         color: SMELTER_GRAY,
         costs: {     // Resource codenames match economy fields
             rock: 4,
-            sand: 3
+            sand: 6
         },
         outputs: {
             metal: 1
@@ -64,8 +64,8 @@ const buildings = [
         height: 3,  // Height in block units
         color: CO2_COLLECTOR_YELLOW,
         costs: {     // Resource codenames match economy fields
-            ice: 2,
-            rock: 2,
+            ice: 4,
+            rock: 4,
             glass: 2
         },
         outputs: {  // Resource codenames match economy fields; outputs are added on a 'tick' basis similar to how food is reduced.
@@ -83,7 +83,7 @@ const buildings = [
         height: 3,  // Height in block units
         color: OXYGEN_RED,
         costs: {     // Resource codenames match economy fields
-            metal: 2,
+            metal: 3,
             rock: 2,
             glass: 2
         },
@@ -91,7 +91,7 @@ const buildings = [
             air: 1
         },
         consumes: { // Represents the cost of running this structure, again on a per-tick basis (so for this structure, 1 tick would reduce your ice reserves by 1 and add 1 cO2).
-            power: 1,
+            power: 2,
             rock: 1
         },
         buildTime: 0    // Will use this later to represent structures being built gradually
@@ -104,8 +104,8 @@ const buildings = [
         color: GREENHOUSE_GREEN,
         costs: {     // Resource codenames match economy fields
             sand: 3,
-            metal: 3,
-            glass: 4
+            metal: 6,
+            glass: 8
         },
         outputs: {
             food: 1,
@@ -125,15 +125,15 @@ const buildings = [
         height: 4,  // Height in block units
         color: BLUEGREEN,
         costs: {     // Resource codenames match economy fields
-            metal: 5,
-            glass: 10,
+            metal: 8,
+            glass: 12,
             air: 8
         },
         outputs: {
             food: 0
         },
         consumes: {
-            power: 2,
+            power: 4,
             air: 1
         },
         buildTime: 0    // Will use this later to represent structures being built gradually
@@ -153,7 +153,7 @@ const buildings = [
             power: 0
         },
         consumes: {
-            power: 3,
+            power: 4,
         },
         buildTime: 0    // Will use this later to represent structures being built gradually
     },

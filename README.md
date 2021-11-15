@@ -121,15 +121,15 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 6. Change money resource to glass.
 
-### 7. Re-adjust resource purchase costs for all buildings.
+7. Re-adjust resource purchase costs for all buildings.
 
-### 8. Re-adjust resource consumption/production rates for all buildings.
+8. Re-adjust resource consumption/production rates for all buildings.
 
-### 9. Add resourceYield value to Blocks, so that the Player can harvest different amounts of resources from them. Ideally this will not be mapped directly to the Block's type, such that different Blocks of the same type can have different 'densities' of the same resource.
+### 9. Add a requiredBuildings list to the victory checker; only START the rescue countdown when they are built (and then make the countdown shorter, and it's a resupply mission instead of a straight-up rescue when it arrives).
 
-### 10. Find out how to do limited-opacity rendering, and add a resource extraction radius around the Player car.
+### 10. Add resourceYield value to Blocks, so that the Player can harvest different amounts of resources from them. Ideally this will not be mapped directly to the Block's type, such that different Blocks of the same type can have different 'densities' of the same resource.
 
-### 11. Add buttons to sidebar menu to toggle between 'building' and 'construction' mode. Construction mode will be required to place buildings, and also allows removal of terrain tiles...
+### 11. Find out how to do limited-opacity rendering, and add a resource extraction radius around the Player car.
 
 ### 12. Add logic to Infra/Building placement process so that buildings can only be built:
 

@@ -39,7 +39,7 @@ class Economy {
                 const xMatch = (mouseX >= block.x && mouseX < block.x + BLOCK_WIDTH);
                 if (yMatch && xMatch && roverInRange) {
                     // If a block is clicked and the rover is in range, mine it:
-                    this.addResource(block.resourceName, 1);    // TODO: Quantity extracted should be a block property and should vary
+                    this.addResource(block.resourceName, 2);    // TODO: Quantity extracted should be a block property and should vary
                     block.incrementClicks()                 // Keep track of how many times a block has been exploited
                     const filteredColumn = column.filter((unit) => unit.timesClicked < unit.maxClicks);
                     map.columns[idx] = filteredColumn;  // Replace column with 'filtered' column to remove blocks that are used up

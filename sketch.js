@@ -8,7 +8,8 @@ const infra = new Infrastructure();
 let gameOn = true;
 let victory = false;      // Use to set the tone of the game over message
 
-let gameTick = 0;         // Updates with every frame update(1/60th second) and resets every economy tick interval
+let victoryCountdown = false; // Once the needed infrastructure is built, start countdown to victory
+let gameTick = 0;         // Updates with every frame update(1/60th second) and resets every economy tick interval once victory countdown has started
 let gameTicksElapsed = 0  // Amount of game tick intervals have elapsed; when this number matches the rescue countdown global constant, you win the game.
 
 function setup() {
@@ -43,11 +44,18 @@ function mousePressed() {
   }
 }
 
-function checkForGameOver(economy) {
+// Check for end-game conditions, good or bad, as well as victory countdown start (starts when all needed buildings are built):
+function checkForGameOver(economy, infra) {
   if (economy.food < 0 || economy.air < 0) {
     // If food drops below zero, you lose bad boy
     gameOn = false;
-  } else if (gameTicksElapsed >= RESCUE_COUNTDOWN_IN_TICKS) {
+  }
+  const domeBuilt = infra.buildings.some((building) => building.name === 'Pressure Dome');
+  const commsBuilt = infra.buildings.some((building) => building.name === 'Comms Tower');
+  if (domeBuilt && commsBuilt) {
+    victoryCountdown = true;
+  }
+  if (gameTicksElapsed >= RESCUE_COUNTDOWN_IN_TICKS) {
     // If sufficient time has elapsed and you haven't run out of food however, you win. Good job!
     gameOn = false;
     victory = true;
@@ -56,10 +64,13 @@ function checkForGameOver(economy) {
 
 function draw() {
   // Check for win/loss:
-  checkForGameOver(economy);
+  checkForGameOver(economy, infra);
   // If game is still going, advance ticker:
   if (gameOn) {
-    gameTick ++;
+    // Only advance the game tick once victory countdown has started:
+    if (victoryCountdown) {
+      gameTick ++;
+    }
     // If ticker is at interval, reset ticker and increase ticks elapsed counter
     if (gameTick >= ECONOMY_TICK_INTERVAL) {
       gameTicksElapsed ++;
@@ -69,7 +80,7 @@ function draw() {
     map1.renderMap();
     menu.render();
     infra.renderBuildings();
-    infra.handleProduction(economy);
+    infra.handleProduction(economy, infra);
     economy.advanceFoodDepletionTicker();
     economy.renderResourceDisplays();
     player.render();
@@ -91,7 +102,7 @@ function draw() {
     textSize(36);
     if (victory) {
       fill(BRIGHT_GREEN);
-      text('YOU HAVE BEEN RESCUED. HURRAY!!! (Click to play again)', 256, 128, 512, 256);
+      text('YOUR COLONY HAS BEEN RESUPPLIED. NO RECLAIMED WASTE FOR DINNER TONIGHT!!! (Click to play again)', 256, 128, 512, 256);
     } else {
       text(`YOUR COLONY HAS DIED OF ${economy.food < 0 ? 'STARVATION' : 'ASPHYXIATION'} ${RESCUE_COUNTDOWN_IN_TICKS - gameTicksElapsed} DAYS BEFORE BEING RESCUED. Click to load into a parellel universe and try again.`, 256, 128, 512, 512);
     }
