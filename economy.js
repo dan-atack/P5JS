@@ -7,8 +7,8 @@ class Economy {
         this.metal = 0;     // The other 'refined' resource, made from rock
         this.cO2 = 0;       // consumed by greenhouse to produce food
         this.power = 100;     // Initially at least, power will just be another thing you can produce, stockpile and spend.
-        this.food = 180;    // goal of the game is to make more of this
-        this.air = 180;     // GIVE DESE PEOPLE EAEAIR!!!
+        this.food = 100;    // goal of the game is to make more of this
+        this.air = 100;     // GIVE DESE PEOPLE EAEAIR!!!
         this.lastTickStockpiles = { // Keep track of the previous values for all resources to establish rates of change:
             ice: [0, 0],    // Values are tuples; first is previous value, second is diff from previous
             sand: [0, 0], 

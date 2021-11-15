@@ -115,7 +115,7 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 3. Add field to Block class: timesClicked, to determine when a resource gets 'tapped out' and disappears!
 
-### 4. Player movement consumes power resource, so that when you run out of juice you can no longer move (therefore an initial power supply is needed).
+4. Player movement consumes power resource, so that when you run out of juice you can no longer move (therefore an initial power supply is needed). To simplify how this works, make traversing one block cost 1 energy.
 
 5. Add air to starting supply and to game-over calculus, including alternate text for game-over message (swap 'asphyxiation' for 'starvation' as the colony's cause of death).
 
