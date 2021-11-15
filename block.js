@@ -4,6 +4,8 @@ class Block {
         this.y = y; // y = pixel location of top edge
         this.type = type;   // Numerical code corresponding to value in map array
         this.resourceName = ''  // Corresponds with resource names in the 'economy' class
+        this.timesClicked = 0;  // Introducing depletable resources!
+        this.maxClicks = 100;   // When the block has been clicked this many times, it is 'used up' and disappears forever!
     }
 
     render() {
@@ -33,6 +35,10 @@ class Block {
         const withinRangeRight = this.x <= player.x + player.maxMiningRange;
         // return only if true:
         if (withinRangeLeft && withinRangeRight) return true;
+    }
+
+    incrementClicks() {
+        this.timesClicked ++;
     }
 
 }

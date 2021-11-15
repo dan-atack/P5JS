@@ -44,7 +44,7 @@ function mousePressed() {
 }
 
 function checkForGameOver(economy) {
-  if (economy.food < 0) {
+  if (economy.food < 0 || economy.air < 0) {
     // If food drops below zero, you lose bad boy
     gameOn = false;
   } else if (gameTicksElapsed >= RESCUE_COUNTDOWN_IN_TICKS) {
@@ -93,7 +93,7 @@ function draw() {
       fill(BRIGHT_GREEN);
       text('YOU HAVE BEEN RESCUED. HURRAY!!! (Click to play again)', 256, 128, 512, 256);
     } else {
-      text(`YOUR COLONY HAS DIED OF STARVATION ${RESCUE_COUNTDOWN_IN_TICKS - gameTicksElapsed} DAYS BEFORE BEING RESCUED. Click to load into a parellel universe and try again.`, 256, 128, 512, 512);
+      text(`YOUR COLONY HAS DIED OF ${economy.food < 0 ? 'STARVATION' : 'ASPHYXIATION'} ${RESCUE_COUNTDOWN_IN_TICKS - gameTicksElapsed} DAYS BEFORE BEING RESCUED. Click to load into a parellel universe and try again.`, 256, 128, 512, 512);
     }
   }
 }

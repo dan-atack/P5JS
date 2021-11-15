@@ -30,7 +30,7 @@ class Economy {
 
     // loop through the blocks in the map to match to a mouse position
     checkForResources(map, mouseX, mouseY, player) {
-        map.columns.forEach((column) => {
+        map.columns.forEach((column, idx) => {
             column.forEach((block) => {
                 // Only allow mining to occur if player is sufficiently close:
                 const roverInRange = block.checkForRoverDistance(player);
@@ -38,7 +38,11 @@ class Economy {
                 const yMatch = (mouseY >= block.y && mouseY < block.y + BLOCK_WIDTH);
                 const xMatch = (mouseX >= block.x && mouseX < block.x + BLOCK_WIDTH);
                 if (yMatch && xMatch && roverInRange) {
-                    this.addResource(block.resourceName, 1);
+                    // If a block is clicked and the rover is in range, mine it:
+                    this.addResource(block.resourceName, 1);    // TODO: Quantity extracted should be a block property and should vary
+                    block.incrementClicks()                 // Keep track of how many times a block has been exploited
+                    const filteredColumn = column.filter((unit) => unit.timesClicked < unit.maxClicks);
+                    map.columns[idx] = filteredColumn;  // Replace column with 'filtered' column to remove blocks that are used up
                 }
             })
         });
