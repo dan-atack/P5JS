@@ -11,6 +11,7 @@ const RESCUE_COUNTDOWN_IN_TICKS = 380 // Amount of tick intervals until the game
 // Colours, in ROYGBIV order (and then grays from lighter to darker)
 
 const RED_ROCK = '#B13A1A';
+const OXYGEN_RED = '#800000';
 const NEGATIVE_RED = '#FF0000';
 const TOGGLED_RED = '#583C36';
 const POWER_YELLOW = '#FFDE89';
@@ -19,6 +20,7 @@ const CO2_COLLECTOR_YELLOW = '#B28000';
 const BRIGHT_GREEN = '#66FF00';
 const FOOD_GREEN = '#7CA059';
 const GREENHOUSE_GREEN = '#475B33';
+const BLUEGREEN = '#0CBAA6';
 const BLUE_ICE = '#AED8E5';
 const SOLAR_PANEL_BLUE = '#012846';
 const GLASS_FACTORY_BLUE = '#0478D2';
@@ -26,6 +28,8 @@ const GLASS_FACTORY_BLUE = '#0478D2';
 const AIRY_GRAY = '#FAFAFA';
 const SIDEBAR_GRAY = '#AAAEBA';
 const MINERAL_GRAY = '#82777C';
+const SMELTER_GRAY = '#0F0F0F';
+const DARK_GRAY = '#3A3B3C';
 
 
 

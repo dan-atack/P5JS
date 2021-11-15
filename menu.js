@@ -5,13 +5,21 @@ class Menu {
         this.y = 0;
         this.width = SIDEBAR_WIDTH;
         this.height = WORLD_HEIGHT * BLOCK_WIDTH;
-        this.button1 = {x: this.x + 0, y: 128, name: 'CO2 Collector'};
-        this.button2 = {x: this.x + 0, y: 256, name: 'Solar Panel'};
-        this.button3 = {x: this.x + 128, y: 128, name: 'Glass Factory'};
-        this.button4 = {x: this.x + 128, y: 256, name: 'Greenhouse'};
+        this.button1 = {x: this.x + 0, y: 128, name: 'Glass Factory'};
+        this.button2 = {x: this.x + 128, y: 128, name: 'Metal Smelter'};
+        this.button3 = {x: this.x, y: 256, name: 'Solar Panel'};
+        this.button4 = {x: this.x + 128, y: 256, name: 'CO2 Collector'};
+        this.button5 = {x: this.x + 0, y: 128, name: 'O2 Separator'};
+        this.button6 = {x: this.x + 128, y: 128, name: 'Greenhouse'};
+        this.button7 = {x: this.x, y: 256, name: 'Pressure Dome'};
+        this.button8 = {x: this.x + 128, y: 256, name: 'Comms Tower'};
+        this.currentButtonsList = [1, 2, 3, 4]; // ID's of the first 4 buttons to be shown
+        this.maxButtonId = 8;                    // Highest ID number for building options
         this.buttonPadding = 8;
         this.buttonWidth = this.width / 2;
         this.buttonHeight = this.height / 4;
+        this.prev = {x: this.x, y: 384, name: 'Prev'}         // The 'prev' button to advance building options
+        this.next = {x: this.x + 128, y: 384, name: 'Next'}   // The 'next' button to retrace building options
         this.nullBuildingShape = {   // Essentially a 'null' building template
             id: 0,
             name: '',
@@ -45,10 +53,21 @@ class Menu {
         rect(this.button3.x, this.button3.y, this.buttonWidth, this.buttonHeight);
         rect(this.button4.x, this.button4.y, this.buttonWidth, this.buttonHeight);
         // Label buttons
-        this.renderButtonText(this.button1);
-        this.renderButtonText(this.button2);
-        this.renderButtonText(this.button3);
-        this.renderButtonText(this.button4);
+        this.showBuildings(this.currentButtonsList);
+        fill(FOOD_GREEN);
+        rect(this.next.x, this.next.y, 128, 64);
+        rect(this.prev.x, this.prev.y, 128, 64);
+        fill(0);
+        textSize(16);
+        text('PREV', this.prev.x + this.buttonPadding * 2, this.prev.y + this.buttonPadding * 2, 128, 64)
+        text('NEXT', this.next.x + this.buttonPadding * 8, this.next.y + this.buttonPadding * 2, 128, 64)
+    }
+
+    // Takes a list of 4 buttons' numbers and prints the building requirements for them:
+    showBuildings(buttons) {    // Initial 'buttons' list is [1, 2, 3, 4]
+        buttons.forEach((button) => {
+            this.renderButtonText(this[`button${button}`]);
+        })
     }
 
     // Separate sub-function to render the text for buttons:
@@ -89,11 +108,47 @@ class Menu {
     // Engine calls this function whenever there is a click; it detects if a menu button was clicked
     checkForClick(mouseX, mouseY) {
         // Check each button's physical area for a click
-        const buttons = [this.button1, this.button2, this.button3, this.button4];
+        const buttons = [this[`button${this.currentButtonsList[0]}`], this[`button${this.currentButtonsList[1]}`], this[`button${this.currentButtonsList[2]}`], this[`button${this.currentButtonsList[3]}`]];
         buttons.forEach((button) => {
             // If a button has been clicked, call the click handler to see which building was selected:
             this.isButtonClicked(button, mouseX, mouseY);
         })
+        this.checkForPrevOrNext(mouseX, mouseY)
+        // TODO: Also check if either the 'next' or 'prev' buttons have been clicked, to show different building options
+    }
+
+    // Determine if Prev or Next buttons have been clicked:
+    checkForPrevOrNext(mouseX, mouseY) {
+        const buttons = [this.prev, this.next];
+        buttons.forEach((button) => {
+            const xMatch = (mouseX >= button.x && mouseX < button.x + this.buttonWidth);
+            const yMatch = (mouseY >= button.y && mouseY < button.y + this.buttonWidth / 2);
+            if (xMatch && yMatch) {
+                if (button.name === 'Prev') {
+                    this.handlePrev();
+                } else if (button.name === 'Next') {
+                    this.handleNext();
+                }
+            }
+        })
+    }
+
+    handlePrev() {
+        // Only allow prev to respond if you're not on the first 'page' of the list:
+        if (this.currentButtonsList[0] > 1) {
+            this.currentButtonsList.forEach((button, idx) => this.currentButtonsList[idx] -= 4);
+        } else {
+            console.log('Already at beginning of build options list');
+        }
+    }
+
+    handleNext() {
+        // Only allow next to respond if you're not on the last 'page' of the list:
+        if (this.currentButtonsList[3] < this.maxButtonId) {
+            this.currentButtonsList.forEach((button, idx) => this.currentButtonsList[idx] += 4);
+        } else {
+            console.log('Already at end of build options list');
+        }
     }
 
     // Select building for production:
@@ -115,7 +170,6 @@ class Menu {
         if (infra.justBuilt) {
             infra.determineBuildingIsAffordable(economy, infra.justBuilt);
             if (infra.missingResources.length > 0) {
-                console.log('ping')
                 infra.resetFlags();
                 this.buildingSelected = this.nullBuildingShape;
             }

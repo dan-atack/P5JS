@@ -106,12 +106,12 @@ This game aims to be an extremely crude prototype for the up-and-coming Mars Col
 
 1. Add new resource type, air, to the Economy class. Along with food, this now also runs out automatically and must be replenished to prevent catastrophic mission failure!
 
-### 2. Add another 4 buildings to the Menu, along with two more buttons to cycle between building options:
+2. Add another 4 buildings to the Menu, along with two more buttons to cycle between building options:
 
-    - Oxygen Extractor (rocks plus power into air)
-    - Fuel Plant (CO2 plus power into fuel)
-    - Living Quarters (???)
-    - Radio Tower (Goal of the game is to build this??)
+   - Oxygen Extractor (rocks plus power into air)
+   - Metal Smelter (rocks plus power into metal)
+   - Habitation Dome (all resources into health and happiness; needed for victory countdown)
+   - Radio Tower (metal and glass and uses power; needed for victory countdown)
 
 ### 3. Add field to Block class: timesClicked, to determine when a resource gets 'tapped out' and disappears!
 

@@ -3,18 +3,20 @@ class Economy {
         this.ice = 0;
         this.sand = 0;
         this.rock = 0;
+        this.glass = 0;     // One of the two basic 'refined' resources, made from sand
+        this.metal = 0;     // The other 'refined' resource, made from rock
         this.cO2 = 0;       // consumed by greenhouse to produce food
-        this.power = 0;     // Initially at least, power will just be another thing you can produce, stockpile and spend.
-        this.glass = 0;     // One of the staple 'processed' resources, made from sand
+        this.power = 100;     // Initially at least, power will just be another thing you can produce, stockpile and spend.
         this.food = 180;    // goal of the game is to make more of this
         this.air = 180;     // GIVE DESE PEOPLE EAEAIR!!!
         this.lastTickStockpiles = { // Keep track of the previous values for all resources to establish rates of change:
             ice: [0, 0],    // Values are tuples; first is previous value, second is diff from previous
             sand: [0, 0], 
-            rock: [0, 0], 
+            rock: [0, 0],
+            glass: [0, 0],
+            metal: [0, 0],
             cO2: [0, 0], 
-            power: [0, 0], 
-            glass: [0, 0], 
+            power: [100, 0], 
             food: [181, -1],    // Make sure any initial values (plus initial change rates) and change rates are reflected here too
             air: [181, -1],
         }
@@ -57,25 +59,32 @@ class Economy {
 
     // Display resource stockpile amounts on the main screen
     renderResourceDisplays() {
+        // NOTE: For stockpile values and rates of change to align, ensure this list follows the sequence in the lastTickStockpiles object
         fill('#FCD63B');
         textSize(24);
+        // Raw resources
         fill(BLUE_ICE);
         text(`Ice: ${this.ice}`, 0, 0, 256, 128);
-        fill(RED_ROCK);
+        fill(YELLOW_SAND);
         text(`Sand: ${this.sand}`, 0, 32, 256, 128);
-        fill(MINERAL_GRAY);
+        fill(RED_ROCK);
         text(`Rock: ${this.rock}`, 0, 64, 256, 128);
-        fill(SIDEBAR_GRAY);
-        text(`CO2: ${this.cO2}`, 0, 96, 256, 128);
-        fill(POWER_YELLOW);
-        text(`Power: ${this.power}`, 0, 128, 256, 128)
+        // Refined resources
         fill(GLASS_FACTORY_BLUE);
-        text(`Glass: ${this.glass}`, 0, 160, 256, 128);
+        text(`Glass: ${this.glass}`, 0, 96, 256, 128);
+        fill(MINERAL_GRAY);
+        text(`Metal: ${this.metal}`, 0, 128, 256, 128);
+        // Renewable/Harvestable resources
+        fill(SIDEBAR_GRAY);
+        text(`CO2: ${this.cO2}`, 0, 160, 256, 128);
+        fill(POWER_YELLOW);
+        text(`Power: ${this.power}`, 0, 192, 256, 128)
+        // Colonist provisions
         fill(FOOD_GREEN);
-        text(`Food: ${this.food}`, 0, 192, 256, 128);
-        this.renderProductionRates();
+        text(`Food: ${this.food}`, 0, 224, 256, 128);
         fill(AIRY_GRAY);
-        text(`Air: ${this.air}`, 0, 224, 256, 128);
+        text(`Air: ${this.air}`, 0, 256, 256, 128);
+        this.renderProductionRates();
     }
 
     // This goes next to the economy's resource stockpile displays on the main UI:
@@ -106,18 +115,22 @@ class Economy {
         this.ice = 0;
         this.sand = 0;
         this.rock = 0;
-        this.cO2 = 0;
-        this.power = 0;
         this.glass = 0;
+        this.metal = 0;
+        this.cO2 = 0;
+        this.power = 100;
         this.food = 180;
+        this.air = 180;
         this.lastTickStockpiles = {
             ice: [0, 0],
             sand: [0, 0], 
-            rock: [0, 0], 
+            rock: [0, 0],
+            glass: [0, 0],
+            metal: [0, 0],
             cO2: [0, 0], 
-            power: [0, 0], 
-            glass: [0, 0], 
+            power: [100, 0], 
             food: [181, -1],
+            air: [181, -1],
         }
         this.foodDepletionTick = 0;
     }

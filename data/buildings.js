@@ -3,6 +3,62 @@
 const buildings = [
     {
         id: 1,
+        name: 'Glass Factory',
+        width: 3,   // Width in block units
+        height: 3,  // Height in block units
+        color: GLASS_FACTORY_BLUE,
+        costs: {     // Resource codenames match economy fields
+            rock: 2,
+            sand: 4
+        },
+        outputs: {
+            glass: 1
+        },
+        consumes: {
+            sand: 1,
+            power: 1
+        },
+        buildTime: 0    // Will use this later to represent structures being built gradually
+    },
+    {
+        id: 2,
+        name: 'Metal Smelter',
+        width: 4,   // Width in block units
+        height: 3,  // Height in block units
+        color: SMELTER_GRAY,
+        costs: {     // Resource codenames match economy fields
+            rock: 4,
+            sand: 3
+        },
+        outputs: {
+            metal: 1
+        },
+        consumes: {
+            rock: 1,
+            power: 1
+        },
+        buildTime: 0    // Will use this later to represent structures being built gradually
+    },
+    {
+        id: 3,
+        name: 'Solar Panel',
+        width: 2,   // Width in block units
+        height: 1,  // Height in block units
+        color: SOLAR_PANEL_BLUE,
+        costs: {     // Resource codenames match economy fields
+            metal: 3,
+            glass: 3
+        },
+        outputs: {
+            power: 1
+        },
+        consumes: {
+            glass: 0    // TODO: Establish how to treat 'zero-cost' structures
+        },
+        buildTime: 0    // Will use this later to represent structures being built gradually
+    },
+    {
+        id: 4,
         name: 'CO2 Collector',
         width: 2,   // Width in block units
         height: 3,  // Height in block units
@@ -16,65 +72,88 @@ const buildings = [
             cO2: 1
         },
         consumes: { // Represents the cost of running this structure, again on a per-tick basis (so for this structure, 1 tick would reduce your ice reserves by 1 and add 1 cO2).
-            ice: 1
-        },
-        buildTime: 0    // Will use this later to represent structures being built gradually
-    },
-    {
-        id: 2,
-        name: 'Glass Factory',
-        width: 3,   // Width in block units
-        height: 3,  // Height in block units
-        color: GLASS_FACTORY_BLUE,
-        costs: {     // Resource codenames match economy fields
-            rock: 2,
-            sand: 3
-        },
-        outputs: {
-            glass: 1
-        },
-        consumes: {
-            sand: 2
-        },
-        buildTime: 0    // Will use this later to represent structures being built gradually
-    },
-    {
-        id: 3,
-        name: 'Solar Panel',
-        width: 2,   // Width in block units
-        height: 1,  // Height in block units
-        color: SOLAR_PANEL_BLUE,
-        costs: {     // Resource codenames match economy fields
-            rock: 5,
-            sand: 2,
-            glass: 2
-        },
-        outputs: {
             power: 1
         },
-        consumes: {
-            glass: 0    // TODO: Establish how to treat 'zero-cost' structures
+        buildTime: 0    // Will use this later to represent structures being built gradually
+    },
+    {
+        id: 5,
+        name: 'O2 Separator',
+        width: 1,   // Width in block units
+        height: 3,  // Height in block units
+        color: OXYGEN_RED,
+        costs: {     // Resource codenames match economy fields
+            metal: 2,
+            rock: 2,
+            glass: 2
+        },
+        outputs: {  // Resource codenames match economy fields; outputs are added on a 'tick' basis similar to how food is reduced.
+            air: 1
+        },
+        consumes: { // Represents the cost of running this structure, again on a per-tick basis (so for this structure, 1 tick would reduce your ice reserves by 1 and add 1 cO2).
+            power: 1,
+            rock: 1
         },
         buildTime: 0    // Will use this later to represent structures being built gradually
     },
     {
-        id: 4,
+        id: 6,
         name: 'Greenhouse',
         width: 3,   // Width in block units
         height: 3,  // Height in block units
         color: GREENHOUSE_GREEN,
         costs: {     // Resource codenames match economy fields
-            rock: 3,
             sand: 3,
-            glass: 2
+            metal: 3,
+            glass: 4
         },
         outputs: {
-            food: 1
+            food: 1,
+            air: 1
         },
         consumes: {
             power: 2,
             cO2: 1,
             ice: 1
+        },
+        buildTime: 0    // Will use this later to represent structures being built gradually
+    },
+    {
+        id: 7,
+        name: 'Pressure Dome',
+        width: 5,   // Width in block units
+        height: 4,  // Height in block units
+        color: BLUEGREEN,
+        costs: {     // Resource codenames match economy fields
+            metal: 5,
+            glass: 10,
+            air: 8
+        },
+        outputs: {
+            food: 0
+        },
+        consumes: {
+            power: 2,
+            air: 1
+        },
+        buildTime: 0    // Will use this later to represent structures being built gradually
+    },
+    {
+        id: 8,
+        name: 'Comms Tower',
+        width: 1,       // Width in block units
+        height: 6,      // Height in block units
+        color: DARK_GRAY,
+        costs: {        // Resource codenames match economy fields
+            rock: 6,
+            metal: 6,
+            glass: 3
+        },
+        outputs: {
+            power: 0
+        },
+        consumes: {
+            power: 3,
         },
         buildTime: 0    // Will use this later to represent structures being built gradually
     },
